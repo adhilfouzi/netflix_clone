@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/homepage.dart';
+import 'package:netflix_clone/presentation/bottombar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,16 +8,16 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor:
+            Colors.black87, // Change the background color here
       ),
-      home: HomePage(),
+      home: BottomBar(),
     );
   }
 }
