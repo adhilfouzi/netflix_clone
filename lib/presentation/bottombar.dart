@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/api/api.dart';
+import 'package:netflix_clone/models/movie.dart';
+import 'package:netflix_clone/presentation/downloads/screen_downloads.dart';
 import 'package:netflix_clone/presentation/homescreen/netflixhomescreen%20.dart';
-import 'package:netflix_clone/presentation/new&hot.dart/newsfeedscreen%20.dart';
-import 'package:netflix_clone/presentation/Downloads/downloads.dart';
-import 'package:netflix_clone/presentation/search/searchscreen%20.dart';
+import 'package:netflix_clone/search/screen_search.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -14,6 +15,12 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0;
   PageController _pageController = PageController();
+  late Future<List<Movie>> trendingMovies;
+  @override
+  void initState() {
+    super.initState();
+    trendingMovies = Api().getTrendingMovies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +32,12 @@ class _BottomBarState extends State<BottomBar> {
             _currentIndex = index;
           });
         },
-        children: [
-          //HomeScreen(),
+        children: const [
           NetflixHomeScreen(),
-          SearchScreen(),
-          NewAndHotScreen(),
-          ProfileScreen(),
+          ScreenSearch(),
+          NetflixHomeScreen(),
+          // builderfact(trendingMovies),
+          ScreenDownloads(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -38,11 +45,11 @@ class _BottomBarState extends State<BottomBar> {
         onTap: (index) {
           _pageController.animateToPage(
             index,
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
           );
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, color: Colors.white),
             label: 'Home',
@@ -68,8 +75,8 @@ class _BottomBarState extends State<BottomBar> {
             Colors.black, // Change this to your desired background color
         selectedFontSize: 14.0,
         unselectedFontSize: 12.0,
-        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
-        unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
       ),
     );
   }

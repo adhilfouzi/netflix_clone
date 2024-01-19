@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:netflix_clone/constants/colors/common_colors.dart';
 
 class NewAndHotScreen extends StatelessWidget {
-  const NewAndHotScreen({super.key});
-
+  const NewAndHotScreen({
+    super.key,
+    required this.snapshot,
+    required this.index,
+  });
+  final AsyncSnapshot snapshot;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

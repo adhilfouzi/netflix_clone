@@ -19,8 +19,10 @@ AppBar appbarHomepage(context) {
       ),
       const Spacer(),
       IconButton(
-          onPressed: () {},
-          icon: const Icon(CupertinoIcons.search, color: titleColor))
+          onPressed: () {}, icon: const Icon(Icons.cast, color: titleColor)),
+      const SizedBox(
+        width: 15,
+      )
     ],
   );
 }

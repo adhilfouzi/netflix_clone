@@ -38,10 +38,6 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
     topRatedSeries = Api().getTopRatedSeries();
   }
 
-  // const SizedBox(
-  //             height: 500, // Adjust the height as needed
-  //             child: TopRatedMovie(),
-  //           ),
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
