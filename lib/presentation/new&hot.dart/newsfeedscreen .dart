@@ -1,174 +1,218 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:netflix_clone/api/api.dart';
 import 'package:netflix_clone/constants/colors/common_colors.dart';
+import 'package:netflix_clone/constants/constants.dart';
+import 'package:netflix_clone/constants/font.dart';
+import 'package:netflix_clone/models/movie.dart';
 
-class NewAndHotScreen extends StatelessWidget {
-  const NewAndHotScreen({
+class CombinedScreen extends StatefulWidget {
+  const CombinedScreen({
     super.key,
-    required this.snapshot,
-    required this.index,
   });
-  final AsyncSnapshot snapshot;
-  final int index;
+
+  @override
+  State<CombinedScreen> createState() => _CombinedScreenState();
+}
+
+class _CombinedScreenState extends State<CombinedScreen> {
+  late Future<List<Movie>> trendingMovies;
+  @override
+  void initState() {
+    super.initState();
+    trendingMovies = Api().getnowPlayingMovies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text(
-          'New and Hot',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(CupertinoIcons.search),
-            onPressed: () {
-              // Implement search functionality
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            //   _buildCategoryTabs(),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                itemCount: 10, // Replace with the actual number of items
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Date on the left side
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            // horizontal: 8,
-                            vertical: 2,
-                          ),
-                          decoration: BoxDecoration(
-                            //  color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            'Feb \n14', // Replace with the actual date
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        // Movie details on the right side
-                        Expanded(
-                          child: Card(
-                            surfaceTintColor: Colors.black87,
-                            color: Colors.black87,
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                //  const SizedBox(width: 10),
-                                // Movie information
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+    return FutureBuilder(
+      future: trendingMovies,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text(snapshot.error.toString()),
+          );
+        } else if (snapshot.hasData) {
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.black,
+              title: const Text(
+                'New and Hot',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.cast),
+                  onPressed: () {
+                    // Implement search functionality
+                  },
+                ),
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        String date = snapshot.data![index].releaseDate;
+                        List<String> dateParts = date.split('-');
+                        final DateTime dateSplit = DateTime.parse(date);
+                        final month = DateFormat('MMM').format(dateSplit);
+                        //    final day = DateFormat('EEEE').format(dateSplit);
+                        //     final size = MediaQuery.of(context).size;
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      month,
+                                      style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      dateParts[2].toString(),
+                                      style: const TextStyle(
+                                          color: titleColor,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Card(
+                                  surfaceTintColor: Colors.black87,
+                                  color: Colors.black87,
+                                  elevation: 2,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
                                     children: [
-                                      ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                        child: SizedBox(
-                                          height: 180,
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          child: Image.network(
-                                            'https://media.themoviedb.org/t/p/w533_and_h300_bestv2/feSiISwgEpVzR1v3zv2n2AU4ANJ.jpg',
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                      ),
-                                      // Movie buttons (Remind Me & Info)
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          const Spacer(),
-                                          Column(
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                  Icons.notifications,
-                                                  color: titleColor,
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              child: SizedBox(
+                                                height: 180,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: Image.network(
+                                                  '${Constants.imagePath}${snapshot.data![index].backdropPath}',
+                                                  filterQuality:
+                                                      FilterQuality.high,
+                                                  fit: BoxFit.fill,
                                                 ),
                                               ),
-                                              const Text(
-                                                "Remaind Me",
-                                                style: TextStyle(
-                                                    color: textColor,
-                                                    fontSize: 10),
-                                              ),
-                                            ],
-                                          ),
-                                          Column(
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                  Icons.info_outline,
-                                                  color: titleColor,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Spacer(),
+                                                Column(
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.notifications,
+                                                        color: titleColor,
+                                                      ),
+                                                    ),
+                                                    const Text(
+                                                      "Remind Me",
+                                                      style: TextStyle(
+                                                          color: textColor,
+                                                          fontSize: 10),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              const Text(
-                                                'info',
-                                                style: TextStyle(
-                                                    color: textColor,
-                                                    fontSize: 10),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                      // Movie title and description
-                                      Text(
-                                        'Movie Title ${index + 1}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                                Column(
+                                                  children: [
+                                                    IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                        Icons.info_outline,
+                                                        color: titleColor,
+                                                      ),
+                                                    ),
+                                                    const Text(
+                                                      'Info',
+                                                      style: TextStyle(
+                                                          color: textColor,
+                                                          fontSize: 10),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              snapshot.data![index].title,
+                                              style: const TextStyle(
+                                                  color: titleColor,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w900),
+                                            ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              snapshot.data![index].overview,
+                                              style: contentTextStyle,
+                                              maxLines: 5,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      const Text(
-                                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }

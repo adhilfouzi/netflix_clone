@@ -24,7 +24,7 @@ class MainCardWidget extends StatelessWidget {
                 child: SizedBox(
                   height: size.height * 0.6,
                   child: Image.network(
-                    '${Constants.imagePath}${snapshot.data![11].posterPath}',
+                    '${Constants.imagePath}${snapshot.data![2].posterPath}',
                     filterQuality: FilterQuality.high,
                     fit: BoxFit.cover,
                   ),

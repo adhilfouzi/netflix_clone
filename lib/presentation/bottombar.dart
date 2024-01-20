@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/api/api.dart';
-import 'package:netflix_clone/models/movie.dart';
+
 import 'package:netflix_clone/presentation/downloads/screen_downloads.dart';
 import 'package:netflix_clone/presentation/homescreen/netflixhomescreen%20.dart';
+import 'package:netflix_clone/presentation/new&hot.dart/newsfeedscreen%20.dart';
 import 'package:netflix_clone/search/screen_search.dart';
 
 class BottomBar extends StatefulWidget {
@@ -15,12 +15,6 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   int _currentIndex = 0;
   PageController _pageController = PageController();
-  late Future<List<Movie>> trendingMovies;
-  @override
-  void initState() {
-    super.initState();
-    trendingMovies = Api().getTrendingMovies();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +29,7 @@ class _BottomBarState extends State<BottomBar> {
         children: const [
           NetflixHomeScreen(),
           ScreenSearch(),
-          NetflixHomeScreen(),
+          CombinedScreen(),
           // builderfact(trendingMovies),
           ScreenDownloads(),
         ],
