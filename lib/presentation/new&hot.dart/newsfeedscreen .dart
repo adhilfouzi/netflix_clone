@@ -47,9 +47,7 @@ class _CombinedScreenState extends State<CombinedScreen> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.cast),
-                  onPressed: () {
-                    // Implement search functionality
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -68,8 +66,6 @@ class _CombinedScreenState extends State<CombinedScreen> {
                         List<String> dateParts = date.split('-');
                         final DateTime dateSplit = DateTime.parse(date);
                         final month = DateFormat('MMM').format(dateSplit);
-                        //    final day = DateFormat('EEEE').format(dateSplit);
-                        //     final size = MediaQuery.of(context).size;
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Row(

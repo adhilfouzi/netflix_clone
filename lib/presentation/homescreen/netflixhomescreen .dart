@@ -130,5 +130,3 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
     );
   }
 }
-
-class NumberTitileCard {}
