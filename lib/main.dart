@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:netflix_clone/presentation/bottombar.dart';
+import 'package:netflix_clone/presentation/splash/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor:
             Colors.black87, // Change the background color here
       ),
-      home: BottomBar(),
+      home: const Splash(),
     );
   }
 }

@@ -63,7 +63,7 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
               child: Stack(
                 children: [
                   ListView(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                     children: [
                       Padding(
                         padding: EdgeInsets.only(top: size.height * 0.1),

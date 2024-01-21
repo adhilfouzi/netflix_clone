@@ -14,7 +14,7 @@ class MainCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(18.0),
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
       child: Column(
         children: [
           Stack(
