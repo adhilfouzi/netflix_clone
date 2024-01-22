@@ -57,8 +57,8 @@ class _BottomBarState extends State<BottomBar> {
             label: 'News & Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: Colors.white),
-            label: 'Profile',
+            icon: Icon(Icons.downloading_rounded, color: Colors.white),
+            label: 'Downloads',
           ),
         ],
         selectedItemColor: Colors.white,
