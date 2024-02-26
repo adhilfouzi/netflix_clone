@@ -14,8 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor:
-            Colors.black87, // Change the background color here
+        scaffoldBackgroundColor: Colors.black87,
       ),
       home: const Splash(),
     );

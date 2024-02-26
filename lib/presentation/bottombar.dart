@@ -30,7 +30,6 @@ class _BottomBarState extends State<BottomBar> {
           NetflixHomeScreen(),
           ScreenSearch(),
           CombinedScreen(),
-          // builderfact(trendingMovies),
           ScreenDownloads(),
         ],
       ),

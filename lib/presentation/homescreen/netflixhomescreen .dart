@@ -13,7 +13,7 @@ import 'package:netflix_clone/presentation/homescreen/widgets/futuremethod.dart'
 ValueNotifier<bool> scrollNotifier = ValueNotifier(true);
 
 class NetflixHomeScreen extends StatefulWidget {
-  const NetflixHomeScreen({super.key});
+  const NetflixHomeScreen({Key? key}) : super(key: key);
 
   @override
   State<NetflixHomeScreen> createState() => _NetflixHomeScreenState();
@@ -70,53 +70,119 @@ class _NetflixHomeScreenState extends State<NetflixHomeScreen> {
                         child: buildFutureBuilder(
                           future: trendingMovies,
                           builder: (context, snapshot) {
-                            return MainCardWidget(snapshot: snapshot);
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text('Error: ${snapshot.error}'),
+                              );
+                            } else {
+                              return MainCardWidget(snapshot: snapshot);
+                            }
                           },
                         ),
                       ),
                       buildFutureBuilder(
                         future: trendingMovies,
                         builder: (context, snapshot) {
-                          return MainTileCard(
-                            title: "Trending Now",
-                            snapshot: snapshot,
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else {
+                            return MainTileCard(
+                              title: "Trending Now",
+                              snapshot: snapshot,
+                            );
+                          }
                         },
                       ),
                       buildFutureBuilder(
                         future: nowPlayingMovies,
                         builder: (context, snapshot) {
-                          return MainTileCard(
-                            title: "Now Playing",
-                            snapshot: snapshot,
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else {
+                            return MainTileCard(
+                              title: "Now Playing",
+                              snapshot: snapshot,
+                            );
+                          }
                         },
                       ),
                       buildFutureBuilder(
                         future: upComingMovies,
                         builder: (context, snapshot) {
-                          return MainTileCard(
-                            title: "Upcoming Movies",
-                            snapshot: snapshot,
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else {
+                            return MainTileCard(
+                              title: "Upcoming Movies",
+                              snapshot: snapshot,
+                            );
+                          }
                         },
                       ),
                       buildFutureBuilder(
                         future: topRatedSeries,
                         builder: (context, snapshot) {
-                          return MainTileCardSeries(
-                            title: "Top Rated TV Series",
-                            snapshot: snapshot,
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else {
+                            return MainTileCardSeries(
+                              title: "Top Rated TV Series",
+                              snapshot: snapshot,
+                            );
+                          }
                         },
                       ),
                       buildFutureBuilder(
                         future: popularMovies,
                         builder: (context, snapshot) {
-                          return MainTileCard(
-                            title: "Popular Movies",
-                            snapshot: snapshot,
-                          );
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child: Text('Error: ${snapshot.error}'),
+                            );
+                          } else {
+                            return MainTileCard(
+                              title: "Popular Movies",
+                              snapshot: snapshot,
+                            );
+                          }
                         },
                       ),
                     ],
